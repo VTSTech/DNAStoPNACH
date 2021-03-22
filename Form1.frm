@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin VB.Form Form1 
    Caption         =   "DNAS Patcher to PNACH"
-   ClientHeight    =   4800
+   ClientHeight    =   4920
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   6825
+   ClientWidth     =   7830
    BeginProperty Font 
       Name            =   "Verdana"
       Size            =   9
@@ -15,24 +15,32 @@ Begin VB.Form Form1
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
-   ScaleHeight     =   4800
-   ScaleWidth      =   6825
+   ScaleHeight     =   4920
+   ScaleWidth      =   7830
    StartUpPosition =   3  'Windows Default
+   Begin VB.CheckBox Check1 
+      Caption         =   "Use Enable"
+      Height          =   210
+      Left            =   4560
+      TabIndex        =   6
+      Top             =   4080
+      Width           =   1455
+   End
    Begin VB.CommandButton Command1 
       Caption         =   "Save"
       Height          =   330
-      Left            =   4080
-      TabIndex        =   6
-      Top             =   4200
-      Width           =   615
+      Left            =   6600
+      TabIndex        =   5
+      Top             =   4080
+      Width           =   735
    End
    Begin VB.Timer Timer1 
-      Left            =   6360
-      Top             =   4320
+      Left            =   6960
+      Top             =   4440
    End
    Begin VB.TextBox Text2 
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
+         Name            =   "Verdana"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -41,16 +49,17 @@ Begin VB.Form Form1
          Strikethrough   =   0   'False
       EndProperty
       Height          =   3975
-      Left            =   3240
+      Left            =   3720
       MultiLine       =   -1  'True
+      ScrollBars      =   2  'Vertical
       TabIndex        =   1
       Text            =   "Form1.frx":0000
       Top             =   120
-      Width           =   3615
+      Width           =   4095
    End
    Begin VB.TextBox Text1 
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
+         Name            =   "Verdana"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -61,17 +70,18 @@ Begin VB.Form Form1
       Height          =   3975
       Left            =   0
       MultiLine       =   -1  'True
+      ScrollBars      =   2  'Vertical
       TabIndex        =   0
       Text            =   "Form1.frx":0006
       Top             =   120
-      Width           =   3135
+      Width           =   3735
    End
    Begin VB.Label Label4 
       AutoSize        =   -1  'True
       Caption         =   "DNAS Patcher by kHn"
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
+         Name            =   "Verdana"
+         Size            =   9
          Charset         =   0
          Weight          =   400
          Underline       =   -1  'True
@@ -79,18 +89,18 @@ Begin VB.Form Form1
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00FF0000&
-      Height          =   195
-      Left            =   4920
-      TabIndex        =   5
-      Top             =   4440
-      Width           =   1605
+      Height          =   210
+      Left            =   5400
+      TabIndex        =   4
+      Top             =   4680
+      Width           =   1995
    End
    Begin VB.Label Label3 
       AutoSize        =   -1  'True
       Caption         =   "www.VTS-Tech.org"
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
+         Name            =   "Verdana"
+         Size            =   9
          Charset         =   0
          Weight          =   400
          Underline       =   -1  'True
@@ -98,47 +108,20 @@ Begin VB.Form Form1
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00FF0000&
-      Height          =   195
-      Left            =   120
-      TabIndex        =   4
-      Top             =   4440
-      Width           =   1410
-   End
-   Begin VB.Label Label2 
-      AutoSize        =   -1  'True
-      Caption         =   "Veritas Technical Solutions"
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   195
-      Left            =   1680
+      Height          =   210
+      Left            =   0
       TabIndex        =   3
-      Top             =   4200
-      Width           =   1920
+      Top             =   4680
+      Width           =   1785
    End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True
-      Caption         =   "Written by VTSTech"
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   195
-      Left            =   120
+      Caption         =   "Written by: VTSTech/Veritas Technical Solutions"
+      Height          =   210
+      Left            =   1440
       TabIndex        =   2
-      Top             =   4200
-      Width           =   1455
+      Top             =   4440
+      Width           =   4485
    End
 End
 Attribute VB_Name = "Form1"
@@ -153,7 +136,10 @@ If Not tmp(0) = "DNAS-net" And Not tmp(0) = "Scanning" Then
     If Len(tmp(0)) = 8 Then
         addr = tmp(0)
         patch = tmp(1)
-        If Mid(tmp(0), 1, 1) = 9 Then
+        If Mid(tmp(0), 1, 1) = 9 And Check1.Value = 1 Then
+            Parse_Line = "patch=1,EE," & addr & ",extended," & patch
+        ElseIf Mid(tmp(0), 1, 1) = 9 And Check1.Value = 0 Then
+            a = a
         Else
             Parse_Line = "patch=1,EE," & addr & ",extended," & patch
         End If
@@ -201,7 +187,7 @@ MsgBox "File written to game.pnach"
 End Sub
 
 Private Sub Form_Load()
-Build = "0.1-R3"
+Build = "0.1-R4"
 Form1.Caption = "DNAS Patcher v" & Build & " by VTSTech"
 Text1.Text = ""
 Text2.Text = ""
