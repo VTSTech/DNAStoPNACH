@@ -153,9 +153,11 @@ If Not tmp(0) = "DNAS-net" And Not tmp(0) = "Scanning" Then
     If Len(tmp(0)) = 8 Then
         addr = tmp(0)
         patch = tmp(1)
-        Parse_Line = "patch=1,EE," & addr & ",word," & patch
+        If Mid(tmp(0), 1, 1) = 9 Then
+        Else
+            Parse_Line = "patch=1,EE," & addr & ",extended," & patch
+        End If
     End If
-
 End If
 
 'DNAS-net Patcher (2020/07/13, test 21)
@@ -199,7 +201,7 @@ MsgBox "File written to game.pnach"
 End Sub
 
 Private Sub Form_Load()
-Build = "0.1-R2"
+Build = "0.1-R3"
 Form1.Caption = "DNAS Patcher v" & Build & " by VTSTech"
 Text1.Text = ""
 Text2.Text = ""
