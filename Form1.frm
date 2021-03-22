@@ -18,10 +18,18 @@ Begin VB.Form Form1
    ScaleHeight     =   4920
    ScaleWidth      =   7830
    StartUpPosition =   3  'Windows Default
+   Begin VB.TextBox Text3 
+      Height          =   315
+      Left            =   5280
+      TabIndex        =   7
+      Text            =   "Text3"
+      Top             =   4080
+      Width           =   1815
+   End
    Begin VB.CheckBox Check1 
       Caption         =   "Use Enable"
       Height          =   210
-      Left            =   4560
+      Left            =   3720
       TabIndex        =   6
       Top             =   4080
       Width           =   1455
@@ -29,13 +37,13 @@ Begin VB.Form Form1
    Begin VB.CommandButton Command1 
       Caption         =   "Save"
       Height          =   330
-      Left            =   6600
+      Left            =   7080
       TabIndex        =   5
       Top             =   4080
       Width           =   735
    End
    Begin VB.Timer Timer1 
-      Left            =   6960
+      Left            =   7320
       Top             =   4440
    End
    Begin VB.TextBox Text2 
@@ -90,7 +98,7 @@ Begin VB.Form Form1
       EndProperty
       ForeColor       =   &H00FF0000&
       Height          =   210
-      Left            =   5400
+      Left            =   5760
       TabIndex        =   4
       Top             =   4680
       Width           =   1995
@@ -179,18 +187,20 @@ End Function
 Private Sub Command1_Click()
 Set FSO = CreateObject("Scripting.FileSystemObject")
 Close #1
-fn = VB.App.Path & "\game.pnach"
+fn = Text3.Text
+fn = VB.App.Path & "\" & fn
 Open fn For Output As #1
 Write #1, Text2.Text
 Close #1
-MsgBox "File written to game.pnach"
+MsgBox "File written to " & fn
 End Sub
 
 Private Sub Form_Load()
-Build = "0.1-R4"
-Form1.Caption = "DNAS Patcher v" & Build & " by VTSTech"
+Build = "0.1-R5"
+Form1.Caption = "DNAS Patcher to PNACH `v" & Build & " by VTSTech"
 Text1.Text = ""
 Text2.Text = ""
+Text3.Text = "game.pnach"
 Timer1.Interval = 2000
 Timer1.Enabled = True
 InputLenPrev = Len(Text1.Text)
