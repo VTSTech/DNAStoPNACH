@@ -190,7 +190,7 @@ Close #1
 fn = Text3.Text
 fn = VB.App.Path & "\" & fn
 Open fn For Output As #1
-Write #1, Text2.Text
+Print #1, Text2.Text
 Close #1
 MsgBox "File written to " & fn
 End Sub
