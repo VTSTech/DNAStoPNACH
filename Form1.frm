@@ -18,6 +18,14 @@ Begin VB.Form Form1
    ScaleHeight     =   4800
    ScaleWidth      =   6825
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton Command1 
+      Caption         =   "Save"
+      Height          =   330
+      Left            =   4080
+      TabIndex        =   6
+      Top             =   4200
+      Width           =   615
+   End
    Begin VB.Timer Timer1 
       Left            =   6360
       Top             =   4320
@@ -138,7 +146,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Dim InputLenPrev, InputLen, LinesOut, LinesIn, Data
+Dim InputLenPrev, InputLen, LinesOut, LinesIn, Data, Build
 Public Function Parse_Line(Data)
 tmp = Split(Data, " ")
 If Not tmp(0) = "DNAS-net" And Not tmp(0) = "Scanning" Then
@@ -179,7 +187,20 @@ End If
 'Still scanning...
 'Scan ended
 End Function
+
+Private Sub Command1_Click()
+Set FSO = CreateObject("Scripting.FileSystemObject")
+Close #1
+fn = VB.App.Path & "\game.pnach"
+Open fn For Output As #1
+Write #1, Text2.Text
+Close #1
+MsgBox "File written to game.pnach"
+End Sub
+
 Private Sub Form_Load()
+Build = "0.1-R2"
+Form1.Caption = "DNAS Patcher v" & Build & " by VTSTech"
 Text1.Text = ""
 Text2.Text = ""
 Timer1.Interval = 2000
