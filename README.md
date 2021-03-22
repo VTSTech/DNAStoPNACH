@@ -1,4 +1,4 @@
 # DNAStoPNACH
  DNAS Patcher output to PNACH file converter
  
-<img src="https://i.gyazo.com/697299fc0ab4de42839a878224e5bfaf.png">
+<img src="https://i.gyazo.com/7dd61a191b878a0ff0f1d1d76697da26.png">
